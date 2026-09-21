@@ -1,0 +1,10 @@
+<div class="provider-cards">
+  {{#providers}}
+  <div class="provider-card"><div class="provider-name">{{provider}}</div><div class="provider-cost">{{cost}}</div><div class="muted">{{tokens}} tokens · {{requests}} requests</div></div>
+  {{/providers}}
+</div>
+<section class="panel"><h2>Provider costs</h2>
+  {{#providers}}
+  <div style="display:flex;align-items:center;gap:10px;margin:12px 0"><div style="width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{provider}}</div><div style="height:22px;background:#62a0ff;border-radius:3px;width:{{barWidth}}%"></div><div>{{cost}}</div></div>
+  {{/providers}}
+</section>

@@ -1,0 +1,56 @@
+<div class="topbar">
+  <h1>Pi token usage</h1>
+  <div class="refresh-controls">
+    <span class="muted">Refresh:</span
+    ><span id="refresh-countdown" class="muted">next in 15s</span
+    ><button type="button" data-refresh="1" onclick="setRefresh(1)">1s</button
+    ><button type="button" data-refresh="15" onclick="setRefresh(15)">
+      15s</button
+    ><button type="button" data-refresh="60" onclick="setRefresh(60)">
+      1 minute</button
+    ><button type="button" data-refresh="0" onclick="setRefresh(0)">
+      Never
+    </button>
+  </div>
+</div>
+<div class="filters">
+  <span class="muted filter-help"
+    >Select a range to filter all charts and summaries.
+    <label style="display: inline-flex; margin-left: 12px"
+      ><input id="include-zeros" type="checkbox" /> Include zero-value
+      periods</label
+    ></span
+  >
+  <div class="date-group">
+    <label>From <input id="start-date" type="date" /></label>
+    <div class="preset-group">
+      <button onclick="setPreset('start', 'today')">Today</button
+      ><button onclick="setPreset('start', 'week')">Week Start (Monday)</button
+      ><button onclick="setPreset('start', 'month')">Month Start</button
+      ><button onclick="setPreset('start', 'year')">Year Start</button>
+    </div>
+  </div>
+  <div class="date-group">
+    <label>To <input id="end-date" type="date" /></label>
+    <div class="preset-group">
+      <button onclick="setPreset('end', 'today')">Today</button
+      ><button onclick="setPreset('end', 'week')">Week Start (Monday)</button
+      ><button onclick="setPreset('end', 'month')">Month Start</button
+      ><button onclick="setPreset('end', 'year')">Year Start</button>
+    </div>
+  </div>
+  <div class="filter-actions">
+    <button onclick="load()">Apply</button
+    ><button
+      class="secondary"
+      onclick="
+        document.getElementById('start-date').value = '';
+        document.getElementById('end-date').value = '';
+        document.getElementById('include-zeros').checked = false;
+        load();
+      "
+    >
+      Clear
+    </button>
+  </div>
+</div>

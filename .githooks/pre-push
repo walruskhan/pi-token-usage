@@ -4,3 +4,4 @@ set -eu
 printf '%s\n' "Running syntax check and lint before push..."
 pnpm check
 pnpm lint
+pnpm test

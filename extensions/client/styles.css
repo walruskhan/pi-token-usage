@@ -1,0 +1,284 @@
+body {
+  font:
+    14px system-ui,
+    sans-serif;
+  background: #10131a;
+  color: #e8edf5;
+  margin: 0;
+  padding: 28px;
+}
+h1 {
+  margin: 0;
+}
+h2 {
+  font-size: 16px;
+}
+.cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.card {
+  background: #1a2030;
+  border-radius: 10px;
+  padding: 16px;
+  min-width: 145px;
+}
+.value {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+.muted {
+  color: #9da8bb;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 22px;
+}
+.panel {
+  background: #171c27;
+  border-radius: 10px;
+  padding: 18px;
+  overflow: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td,
+th {
+  text-align: left;
+  padding: 9px;
+  border-bottom: 1px solid #2a3242;
+}
+th {
+  color: #9da8bb;
+}
+.chart {
+  height: 210px;
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  border-bottom: 1px solid #445;
+  padding: 8px 0;
+}
+.bar {
+  background: #34435c;
+  min-width: 3px;
+  flex: 1;
+  position: relative;
+}
+.bar:hover {
+  background: #62a0ff;
+}
+.bar-label {
+  display: block;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #9da8bb;
+  white-space: nowrap;
+}
+.bar:hover .bar-label {
+  color: #e8edf5;
+  font-weight: 700;
+}
+.bar span {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #000;
+  border: 1px solid #445;
+  border-radius: 5px;
+  padding: 8px;
+  white-space: nowrap;
+  line-height: 1.5;
+  text-align: left;
+  pointer-events: none;
+  z-index: 2;
+}
+.bar:hover span {
+  display: block;
+}
+.wide {
+  grid-column: 1/-1;
+}
+.provider-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+.provider-card {
+  background: #20283a;
+  border-left: 4px solid #62a0ff;
+  border-radius: 8px;
+  padding: 14px;
+  min-width: 180px;
+}
+.provider-name {
+  font-weight: 600;
+}
+.provider-cost {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.water-controls {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.water-controls select {
+  background: #10131a;
+  color: #e8edf5;
+  border: 1px solid #445;
+  border-radius: 5px;
+  padding: 7px;
+  margin-left: 5px;
+}
+.water-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.water-comparison-heading {
+  font-weight: 700;
+  margin-top: 16px;
+}
+.water-comparisons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.comparison-or {
+  color: #9da8bb;
+  font-weight: 700;
+}
+.comparison-card {
+  background: #1a2030;
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 125px;
+  text-align: center;
+}
+.comparison-icon {
+  font-size: 28px;
+}
+.comparison-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+.comparison-label {
+  color: #9da8bb;
+  font-size: 12px;
+}
+.water-card {
+  background: #20283a;
+  border-radius: 8px;
+  padding: 14px;
+  min-width: 150px;
+}
+.water-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 5px 0;
+}
+.filters {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  padding: 14px;
+  background: #171c27;
+  border-radius: 10px;
+}
+.date-group {
+  min-width: 310px;
+}
+.filter-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 22px;
+}
+.filter-help {
+  width: 100%;
+  order: -1;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.refresh-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.refresh-controls button {
+  background: #20283a;
+  color: #cbd5e1;
+  border: 1px solid #445;
+  border-radius: 5px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+.refresh-controls button.active,
+.refresh-controls button:hover {
+  background: #62a0ff;
+  color: #07101f;
+}
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.preset-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.preset-group button {
+  padding: 5px 8px;
+  font-size: 12px;
+}
+.filters input {
+  background: #10131a;
+  color: #e8edf5;
+  border: 1px solid #445;
+  border-radius: 5px;
+  padding: 7px;
+}
+.filters button {
+  background: #62a0ff;
+  color: #07101f;
+  border: 0;
+  border-radius: 5px;
+  padding: 8px 13px;
+  cursor: pointer;
+}
+.filters button.secondary {
+  background: #354158;
+  color: #e8edf5;
+}
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

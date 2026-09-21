@@ -3,24 +3,29 @@
   "version": "0.1.0",
   "description": "Persistent token and cost tracking dashboard for pi",
   "keywords": ["pi-package"],
-  "license": "MIT",
+  "license": "WTFPL",
   "type": "module",
   "pi": {
     "extensions": ["./extensions/main.ts"]
   },
   "scripts": {
-    "check": "node --experimental-strip-types --check extensions/token-stats.ts && node --experimental-strip-types --check extensions/SqliteDAL.ts",
-    "lint": "biome lint extensions",
-    "lint-fix": "biome lint --write extensions",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "check": "node --experimental-strip-types --check extensions/main.ts && node --experimental-strip-types --check extensions/tracking.ts && node --experimental-strip-types --check extensions/api/server.ts && node --experimental-strip-types --check extensions/api/render.ts && node --experimental-strip-types --check extensions/dal/sqlite.ts && node --experimental-strip-types --check extensions/utils/numbers.ts && node --experimental-strip-types --check extensions/utils/sql.ts && node --experimental-strip-types --check extensions/utils/time.ts && node --experimental-strip-types --check extensions/utils/format.ts",
+    "lint": "biome lint extensions && prettier --check \"extensions/**/*.{ts,js,html,css}\"",
+    "lint-fix": "biome lint --write extensions && prettier --write \"extensions/**/*.{ts,js,html,css}\"",
+    "format": "prettier --write \"extensions/**/*.{ts,js,html,css}\"",
     "mock-data": "node scripts/seed-mock-data.mjs",
     "hooks:install": "git config core.hooksPath .githooks"
   },
   "dependencies": {
-    "better-sqlite3": "^12.6.2"
+    "better-sqlite3": "^12.6.2",
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.9",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "prettier": "^3.6.2",
+    "@types/mustache": "^4.2.6"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"

@@ -2,6 +2,10 @@
 default:
     @just --list
 
+# Run unit tests.
+test:
+    pnpm test
+
 # Check TypeScript syntax without emitting files.
 check:
     pnpm check

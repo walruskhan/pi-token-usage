@@ -15,6 +15,9 @@ A persistent token and cost usage dashboard for Pi.
 - **Visual comparisons** — Expresses estimated water usage as glasses, bottles, showers, bathtubs, cashews, milk tankers, blue whales, human bodies, Coke bottles, and Olympic swimming pools.
 - **Local-only dashboard** — Serves the dashboard on `127.0.0.1` and opens it in the default browser.
 - **Prepared database statements** — Uses `better-sqlite3` and a dedicated SQLite data-access layer.
+- **Vendored HTMX** — Includes `extensions/vendor/htmx.min.js` so the local dashboard does not depend on a CDN or external network access.
+- **Split dashboard assets** — Page markup, styles, and browser logic are maintained in separate files.
+- **Mustache templates** — HTMX dashboard fragments are rendered with lightweight Mustache templates.
 - **Mock data generator** — Populate the dashboard with sample data across providers and time periods.
 
 ## Installation
@@ -84,13 +87,13 @@ Tables:
 Usage rows are never deleted during normal operation. Stable event keys prevent duplicate writes when a session is reloaded. The database layer lives in:
 
 ```text
-extensions/SqliteDAL.ts
+extensions/dal/sqlite.ts
 ```
 
 The dashboard is kept separately in:
 
 ```text
-extensions/dashboard.html
+extensions/client/index.html
 ```
 
 ## Mock data
@@ -113,9 +116,15 @@ Enter the Devbox environment:
 devbox shell
 ```
 
-The Devbox shell installs dependencies and builds the native `better-sqlite3` dependency.
+Devbox is used to install all development dependencies and provide the project tools. The Devbox shell installs the dependencies and builds the native `better-sqlite3` dependency; `better-sqlite3` is the only dependency allowed to run an install/build script.
 
 ## Checks
+
+Run the unit tests:
+
+```bash
+pnpm test
+```
 
 Run the TypeScript syntax checks:
 
@@ -148,6 +157,7 @@ The hooks scan staged files for secrets before commits and run checks before pus
 The `justfile` provides convenient commands:
 
 - `just` — List available commands.
+- `just test` — Run unit tests.
 - `just check` — Run TypeScript syntax checks.
 - `just lint` — Check extension files for lint errors.
 - `just lint-fix` — Apply available lint fixes.
@@ -163,44 +173,44 @@ Launch the local extension directly:
 just pi
 ```
 
-## Database inspection tools
-
-The `just db` recipe opens the database with **DB Browser for SQLite** (`sqlitebrowser`):
-
-```bash
-just db
-```
-
-Install DB Browser for SQLite with your system package manager, for example:
-
-```bash
-# Arch Linux
-sudo pacman -S sqlitebrowser
-
-# Debian/Ubuntu
-sudo apt install sqlitebrowser
-```
-
-Other useful options:
-
-- **DB Browser for SQLite** — Best general-purpose GUI for browsing tables, running queries, and inspecting indexes.
-- **SQLiteStudio** — Full-featured cross-platform GUI with schema browsing and SQL editing.
-- **LiteCLI** — Terminal client with autocomplete and table-friendly output.
-- **Datasette** — Useful for serving a read-only SQLite database as a local web application.
-- **sqlite3** — Minimal command-line tool for quick queries and scripts.
-
-The database path is `~/.pi/agent/token-usage.sqlite`, or `$PI_CODING_AGENT_DIR/token-usage.sqlite` when that environment variable is set.
-
 ## Package structure
 
 ```text
 extensions/
-├── main.ts             # Pi package entrypoint
-├── token-stats.ts      # Pi events, commands, and dashboard server
-├── SqliteDAL.ts        # SQLite access and prepared statements
-└── dashboard.html      # Dashboard markup, styles, and browser logic
+├── main.ts             # Pi hooks and commands
+├── tracking.ts         # Usage/session tracking
+├── client/
+│   ├── index.html       # Dashboard page shell and controls
+│   ├── index.js         # Dashboard interactions and rendering
+│   └── fragments/
+│       └── controls.html  # HTMX-loaded dashboard controls
+│   └── styles.css       # Dashboard styles
+├── fragments/
+│   └── controls.html   # HTMX-loaded dashboard controls
+├── api/
+│   ├── server.ts       # Dashboard data and asset server
+│   ├── render.ts       # Mustache dashboard renderer
+│   └── templates/
+│       ├── dashboard.mustache       # Dashboard composition template
+│       ├── summary.mustache         # Summary cards
+│       ├── charts.mustache          # Time-based cost charts
+│       ├── providers.mustache       # Provider cards and chart
+│       ├── water-impact.mustache    # Water-impact section
+│       └── models.mustache          # Model usage table
+├── dal/
+│   └── sqlite.ts       # SQLite access and prepared statements
+├── utils/
+│   ├── numbers.ts      # Numeric helpers
+│   ├── sql.ts          # SQL helpers
+│   ├── time.ts         # Timestamp helpers
+│   └── format.ts       # Display and HTML formatting helpers
+└── vendor/
+    └── htmx.min.js    # Vendored HTMX runtime
 scripts/
-└── seed-mock-data.mjs  # Sample data generator
+└── seed-mock-data.mjs  # Development sample data generator
+test/
+├── render.test.ts      # Template/rendering tests
+└── utils.test.ts       # Utility tests
 ```
 
 ## Publish

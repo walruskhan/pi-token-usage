@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Pi token usage</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/htmx.min.js"></script>
+  </head>
+
+  <body>
+    <div
+      id="controls"
+      hx-get="/fragments/controls"
+      hx-trigger="load"
+      hx-swap="innerHTML"
+    >
+      Loading controls…
+    </div>
+    <div id="app">Loading…</div>
+    <script src="/index.js"></script>
+  </body>
+</html>

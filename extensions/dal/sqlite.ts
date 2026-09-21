@@ -40,8 +40,13 @@ export class SqliteDAL {
       CREATE INDEX IF NOT EXISTS usage_events_occurred ON usage_events(occurred_at);
       CREATE INDEX IF NOT EXISTS usage_events_model ON usage_events(provider, model);
     `);
-    try { this.db.exec("ALTER TABLE usage_events ADD COLUMN reasoning_tokens INTEGER NOT NULL DEFAULT 0"); } catch (error: any) {
-      if (!String(error?.message).includes("duplicate column name")) throw error;
+    try {
+      this.db.exec(
+        "ALTER TABLE usage_events ADD COLUMN reasoning_tokens INTEGER NOT NULL DEFAULT 0",
+      );
+    } catch (error: any) {
+      if (!String(error?.message).includes("duplicate column name"))
+        throw error;
     }
   }
 
@@ -57,7 +62,9 @@ export class SqliteDAL {
     this.database?.close();
     this.database = undefined;
     for (const path of [this.path, `${this.path}-wal`, `${this.path}-shm`]) {
-      try { await unlink(path); } catch (error: any) {
+      try {
+        await unlink(path);
+      } catch (error: any) {
         if (error?.code !== "ENOENT") throw error;
       }
     }
