@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -eu
+
+# pnpm integrity hashes are high-entropy public checksums, not credentials.
+git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 -r detect-secrets-hook --exclude-files '(^|/)pnpm-lock\.yaml$'

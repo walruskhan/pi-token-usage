@@ -1,0 +1,31 @@
+{
+  "name": "pi-token-stats",
+  "version": "0.1.0",
+  "description": "Persistent token and cost tracking dashboard for pi",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "type": "module",
+  "pi": {
+    "extensions": ["./extensions/main.ts"]
+  },
+  "scripts": {
+    "check": "node --experimental-strip-types --check extensions/token-stats.ts && node --experimental-strip-types --check extensions/SqliteDAL.ts",
+    "lint": "biome lint extensions",
+    "lint-fix": "biome lint --write extensions",
+    "mock-data": "node scripts/seed-mock-data.mjs",
+    "hooks:install": "git config core.hooksPath .githooks"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.9",
+    "@types/node": "^22.0.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  }
+}
