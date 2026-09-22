@@ -14,7 +14,7 @@ A persistent token and cost usage dashboard for Pi.
 - **Automatic model classification** — Categorizes models as low, medium, or frontier based on model IDs, with manual overrides.
 - **Visual comparisons** — Expresses estimated water usage as glasses, bottles, showers, bathtubs, cashews, milk tankers, blue whales, human bodies, Coke bottles, and Olympic swimming pools.
 - **Local-only dashboard** — Serves the dashboard on `127.0.0.1` and opens it in the default browser.
-- **Prepared database statements** — Uses `better-sqlite3` and a dedicated SQLite data-access layer.
+- **Prepared database statements** — Uses Node's built-in `node:sqlite` API and a dedicated SQLite data-access layer.
 - **Vendored HTMX** — Includes `extensions/vendor/htmx.min.js` so the local dashboard does not depend on a CDN or external network access.
 - **Split dashboard assets** — Page markup, styles, and browser logic are maintained in separate files.
 - **Mustache templates** — HTMX dashboard fragments are rendered with lightweight Mustache templates.
@@ -40,7 +40,7 @@ To test the extension from a local checkout without installing it:
 pi -e ./extensions/main.ts
 ```
 
-The package includes the runtime dependency `better-sqlite3`. No external `sqlite3` command-line binary is required.
+The extension uses Node's built-in `node:sqlite` API, so it has no native npm dependency and does not need the external `sqlite3` command-line binary. Node.js 22.5 or newer is required.
 
 ## Usage
 
@@ -108,7 +108,7 @@ The data spans multiple days, weeks, months, and years. Existing records are pre
 
 ## Development
 
-The project uses Node.js 22, pnpm, Devbox, and Just.
+The project uses Node.js 22.5 or newer, pnpm, Devbox, and Just.
 
 Enter the Devbox environment:
 
@@ -116,7 +116,7 @@ Enter the Devbox environment:
 devbox shell
 ```
 
-Devbox is used to install all development dependencies and provide the project tools. The Devbox shell installs the dependencies and builds the native `better-sqlite3` dependency; `better-sqlite3` is the only dependency allowed to run an install/build script.
+Devbox is used to install all development dependencies and provide the project tools. SQLite is provided by Node.js itself, so dependency installation does not compile a native SQLite addon.
 
 ## Checks
 

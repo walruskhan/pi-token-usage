@@ -1,21 +1,21 @@
-import Database from "better-sqlite3";
+import { DatabaseSync } from "node:sqlite";
 import { mkdirSync } from "node:fs";
 import { unlink } from "node:fs/promises";
 import { dirname } from "node:path";
 
 export class SqliteDAL {
-  private database: Database.Database | undefined;
+  private database: DatabaseSync | undefined;
   private readonly path: string;
 
   constructor(path: string) {
     this.path = path;
   }
 
-  private get db(): Database.Database {
+  private get db(): DatabaseSync {
     if (!this.database) {
       mkdirSync(dirname(this.path), { recursive: true });
-      this.database = new Database(this.path);
-      this.database.pragma("journal_mode = WAL");
+      this.database = new DatabaseSync(this.path);
+      this.database.exec("PRAGMA journal_mode = WAL");
     }
     return this.database;
   }
