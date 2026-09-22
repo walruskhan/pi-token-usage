@@ -2,7 +2,7 @@ import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { SqliteDAL } from "./dal/sqlite.ts";
-import { number } from "./utils/numbers.ts";
+import { nonNegativeNumber, number } from "./utils/numbers.ts";
 import { timestamp } from "./utils/time.ts";
 
 export const DB_PATH = join(
@@ -95,11 +95,11 @@ export async function recordUsage(
       number(usage.cacheRead),
       number(usage.cacheWrite),
       number(usage.totalTokens),
-      number(cost.input),
-      number(cost.output),
-      number(cost.cacheRead),
-      number(cost.cacheWrite),
-      number(cost.total),
+      nonNegativeNumber(cost.input),
+      nonNegativeNumber(cost.output),
+      nonNegativeNumber(cost.cacheRead),
+      nonNegativeNumber(cost.cacheWrite),
+      nonNegativeNumber(cost.total),
       source,
     ],
   );

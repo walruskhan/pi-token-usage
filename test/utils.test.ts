@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { number } from "../extensions/utils/numbers.ts";
+import { nonNegativeNumber, number } from "../extensions/utils/numbers.ts";
 import { sqlString } from "../extensions/utils/sql.ts";
 import { periodLabel } from "../extensions/utils/format.ts";
 
@@ -10,8 +10,17 @@ test("number normalizes invalid values to zero", () => {
   assert.equal(number(Infinity), 0);
 });
 
+test("nonNegativeNumber clamps negative monetary values", () => {
+  assert.equal(nonNegativeNumber(4.2), 4.2);
+  assert.equal(nonNegativeNumber(-4.2), 0);
+  assert.equal(nonNegativeNumber("not a number"), 0);
+});
+
 test("sqlString escapes apostrophes as SQL data", () => {
-  assert.equal(sqlString("model'; DROP TABLE usage_events; --"), "'model''; DROP TABLE usage_events; --'");
+  assert.equal(
+    sqlString("model'; DROP TABLE usage_events; --"),
+    "'model''; DROP TABLE usage_events; --'",
+  );
 });
 
 test("periodLabel adds a weekday to daily periods", () => {

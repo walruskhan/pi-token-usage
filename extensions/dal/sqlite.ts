@@ -48,6 +48,19 @@ export class SqliteDAL {
       if (!String(error?.message).includes("duplicate column name"))
         throw error;
     }
+
+    // Some routers (notably openrouter/auto-beta) can report a negative
+    // charge. Keep historical records from corrupting aggregate statistics.
+    this.db.exec(`
+      UPDATE usage_events SET
+        input_cost = MAX(input_cost, 0),
+        output_cost = MAX(output_cost, 0),
+        cache_read_cost = MAX(cache_read_cost, 0),
+        cache_write_cost = MAX(cache_write_cost, 0),
+        total_cost = MAX(total_cost, 0)
+      WHERE input_cost < 0 OR output_cost < 0 OR cache_read_cost < 0
+        OR cache_write_cost < 0 OR total_cost < 0
+    `);
   }
 
   run(sql: string, params: unknown[] = []): void {
